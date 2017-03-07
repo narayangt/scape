@@ -1,0 +1,30 @@
+# Url in scape framework are designed to work in following format:
+# www.planetonnet.com/home
+#           controller: HomeController file: scHomeController.php in "scape\app\controller" dir or namespace
+#           view:       HomeView  file: scHomeView.php in "scape\app\view\home" dir or namespace
+# www.planetonnet.com/home/action:
+#           controller: HomeController file: scHomeController.php in "scape\app\controller" dir or namespace
+#           view:       HomeView  file: scHomeView.php in "scape\app\view\home" dir or namespace
+#           action:     action function should implement in controller HomeController
+#
+# www.planetonnet.com/home/default/action
+#           controller: HomeController file: scHomeController.php in "scape\app\controller" dir or namespace
+#           view:       DefaultView    file: scDefaultView.php in "scape\app\view\home" dir or namespace
+#           action:     action() should implement in controller HomeController
+# URL var can start with ?name=value&.... format for now. It will be improved in future
+# All non valid request including wrong controller name and wrong view name are redirected to:
+#           www.planetonnet.com/error/error404
+
+RewriteEngine On
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?controller=$1
+RewriteRule ^([a-zA-Z0-9]+)/$ index.php?controller=$1
+
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php?controller=$1&action=$2
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ index.php?controller=$1&action=$2
+
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php?controller=$1&view=$2&action=$3
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ index.php?controller=$1&view=$2&action=$3
+
+ErrorDocument 404 /error/error404
+
+ErrorDocument 500 /error/error500
